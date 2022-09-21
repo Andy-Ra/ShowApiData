@@ -116,6 +116,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin_bottom="25dp"
+        android:layout_marginBottom="25dp"
         android:id="@+id/dprogress"/>
 </RelativeLayout>

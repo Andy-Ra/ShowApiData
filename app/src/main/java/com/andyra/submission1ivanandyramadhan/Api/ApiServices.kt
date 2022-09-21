@@ -8,7 +8,7 @@ import retrofit2.http.*
 interface ApiServices {
     @GET("search/users?q={login}")
     fun getSearch(
-        @Path("login") login: String
+        @Path("login") items: String
     ): Call<ListData>
 
     @GET("users/{login}")
