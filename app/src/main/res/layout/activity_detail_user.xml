@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailUser">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lydprofile"
+        android:layout_margin="25dp">
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/user1"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/imgdetail"
+        android:contentDescription="@string/photodetail"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Name"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/imgdetail"
+        android:id="@+id/tvdname"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/username"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/tvdname"
+        android:id="@+id/tvduname"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:text="@string/location"
+        android:drawableLeft="@drawable/ic_outline_location_on_16"
+        android:layout_below="@id/tvduname"
+        android:id="@+id/tvdlocation"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="15dp"
+        android:text="@string/company"
+        android:drawableLeft="@drawable/ic_baseline_domain_16"
+        android:layout_below="@id/tvduname"
+        android:layout_toRightOf="@id/tvdlocation"
+        android:id="@+id/tvdcompany"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/follower"
+        android:drawableLeft="@drawable/ic_outline_people_16"
+        android:layout_below="@id/tvdcompany"
+        android:id="@+id/tvdppeople"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lydprofile"
+        android:id="@+id/lydmenu">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:text="@string/repo"
+            android:id="@+id/btndrepo"
+            android:textColor="@color/black"
+            android:background="@android:color/transparent"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:text="@string/project"
+            android:layout_below="@id/tvdppeople"
+            android:textColor="@color/black"
+            android:background="@android:color/transparent"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:text="@string/stars"
+            android:layout_below="@id/tvdppeople"
+            android:textColor="@color/black"
+            android:background="@android:color/transparent"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_below="@id/lydmenu"
+        android:id="@+id/vdline"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/vdline"
+        android:gravity="center"
+        android:text="@string/dcommingsoon"/>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin_bottom="25dp"
+        android:id="@+id/dprogress"/>
+</RelativeLayout>

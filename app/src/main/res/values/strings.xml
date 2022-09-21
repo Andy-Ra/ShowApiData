@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Submission1 Ivan Andy Ramadhan</string>
+    <string name="Name">name</string>
+    <string name="username">Username</string>
+    <string name="photodetail">Ini adalah foto profil dari detail user</string>
+    <string name="location">Location</string>
+    <string name="company">Company</string>
+    <string name="follower">Followers</string>
+    <string name="repo">Repository</string>
+    <string name="project">Projects</string>
+    <string name="stars">Stars</string>
+    <string name="dcommingsoon">Detail Page (Coming Soon)</string>
+    <string name="following">Following</string>
+    <string name="detailuser">Detail User</string>
+    <string name="logo">Logo App</string>
+    <string name="slistp">List Profile</string>
+</resources>

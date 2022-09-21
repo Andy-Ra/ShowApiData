@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvlist"
+    android:layout_margin="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:id="@+id/imgitempp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/user1"
+            android:contentDescription="@string/photodetail"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvitemname"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imgitempp"
+            app:layout_constraintTop_toTopOf="@+id/imgitempp"
+            android:layout_marginStart="15dp"
+            android:text="@string/Name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvitemuser"
+            app:layout_constraintTop_toBottomOf="@id/tvitemname"
+            app:layout_constraintStart_toEndOf="@+id/imgitempp"
+            android:layout_marginStart="15dp"
+            android:text="@string/username"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvitemcompany"
+            app:layout_constraintStart_toEndOf="@id/imgitempp"
+            app:layout_constraintTop_toBottomOf="@id/tvitemuser"
+            android:layout_marginStart="15dp"
+            android:paddingTop="15dp"
+            android:text="@string/company"
+            android:drawableLeft="@drawable/ic_baseline_domain_16"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvitemlocation"
+            app:layout_constraintStart_toEndOf="@id/imgitempp"
+            app:layout_constraintTop_toBottomOf="@id/tvitemcompany"
+            android:layout_marginStart="15dp"
+            android:paddingTop="5dp"
+            android:text="@string/location"
+            android:drawableLeft="@drawable/ic_outline_location_on_16" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
