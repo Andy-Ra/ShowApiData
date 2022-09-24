@@ -3,11 +3,6 @@ package com.andyra.submission1ivanandyramadhan.Data
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
-@Parcelize
-data class ListData(
-	@field:SerializedName("items")
-	val items: ArrayList<ProfileData?>? = null
-):Parcelable
 
 @Parcelize
 data class ProfileData(

@@ -7,17 +7,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.andyra.submission1ivanandyramadhan.Data.ProfileData
+import com.andyra.submission1ivanandyramadhan.Data.Items
 import com.andyra.submission1ivanandyramadhan.DetailUser
 import com.andyra.submission1ivanandyramadhan.R
 import com.bumptech.glide.Glide
 
-class ListProfileAdapter(val mlist: ArrayList<ProfileData>) : RecyclerView.Adapter<ListProfileAdapter.LisViewHolder>() {
+class ListProfileAdapter(val mlist: ArrayList<Items>) : RecyclerView.Adapter<ListProfileAdapter.LisViewHolder>() {
     class LisViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        var tvname: TextView = itemView.findViewById(R.id.tvitemname)
         var tvuser: TextView = itemView.findViewById(R.id.tvitemuser)
-        var tvcomp: TextView = itemView.findViewById(R.id.tvitemcompany)
-        var tvlocation: TextView = itemView.findViewById(R.id.tvitemlocation)
         var imgphoto: ImageView = itemView.findViewById(R.id.imgitempp)
     }
 
@@ -27,33 +24,21 @@ class ListProfileAdapter(val mlist: ArrayList<ProfileData>) : RecyclerView.Adapt
     }
 
     override fun onBindViewHolder(mholder: LisViewHolder, mposition: Int) {
-        val(_, photo, name, username, location, company) = mlist[mposition]
+        val(photo, username) = mlist[mposition]
         mholder.apply {
             Glide.with(itemView.context)
                 .load(photo)
                 .circleCrop()
                 .into(imgphoto)
-            tvname.text = name
-            tvuser.text = "@"+username
-            tvcomp.text = " "+company
-            tvlocation.text = " "+location
+            tvuser.text = username
         }
 
         mholder.itemView.setOnClickListener(){
             val mcontext = mholder.itemView.context
-            val sendprofile = ProfileData(
-                mlist[mposition].id,
-                mlist[mposition].avatarUrl,
-                mlist[mposition].name,
-                mlist[mposition].login,
-                mlist[mposition].location,
-                mlist[mposition].company,
-                mlist[mposition].following,
-                mlist[mposition].followers,
-                mlist[mposition].publicRepos
-            )
+            val sendlogin = mlist[mposition].login
             val pindah = Intent(mcontext, DetailUser::class.java)
-            pindah.putExtra(DetailUser.EXTRA_LOGIN, sendprofile)
+
+            pindah.putExtra(DetailUser.EXTRA_LOGIN, sendlogin)
             mcontext.startActivity(pindah)
 
         }

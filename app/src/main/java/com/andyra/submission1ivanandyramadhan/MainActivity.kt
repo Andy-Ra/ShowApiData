@@ -1,16 +1,20 @@
 package com.andyra.submission1ivanandyramadhan
 
-import android.content.ContentValues.TAG
+import android.app.SearchManager
+import android.content.Context
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andyra.submission1ivanandyramadhan.Adapter.ListProfileAdapter
 import com.andyra.submission1ivanandyramadhan.Api.ApiConfig
-import com.andyra.submission1ivanandyramadhan.Data.ListData
-import com.andyra.submission1ivanandyramadhan.Data.ProfileData
+import com.andyra.submission1ivanandyramadhan.Data.Items
+import com.andyra.submission1ivanandyramadhan.Data.ListProfile
 import com.andyra.submission1ivanandyramadhan.databinding.ActivityMainBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,9 +22,10 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityMainBinding
-    private val mlistp = ArrayList<ProfileData>()
+    private val mlistprof = ArrayList<Items>()
 
-    private val mlist = ArrayList<ProfileData>()
+    private var username: String = "Andy-Ra"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -28,96 +33,93 @@ class MainActivity : AppCompatActivity() {
         setContentView(mBinding.root)
         setTitle(R.string.slistp)
 
-
-        mBinding.rvlist.setHasFixedSize(true)
-
+        showLoading(true)
         getusername()
-        mlist.addAll(mlistp)
-        showRecyclerList()
+        mBinding.rvlist.setHasFixedSize(true)
     }
 
+    override fun onCreateOptionsMenu(mmenu: Menu): Boolean {
+        val menuinflate = menuInflater
+        menuinflate.inflate(R.menu.option_menu, mmenu)
+        val msearchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val msearchView = mmenu.findItem(R.id.searchuser).actionView as SearchView
+
+        msearchView.setSearchableInfo(msearchManager.getSearchableInfo(componentName))
+        msearchView.queryHint = resources.getString(R.string.search)
+        msearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                showLoading(true)
+                username = query
+                getusername()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                return false
+            }
+        })
+        return true
+    }
+
+
     private fun getusername() {
-        val mclient = ApiConfig.getApiService().getSearch(EXTRA_SEARCH)
-        mclient.enqueue(object : Callback<ListData>{
+        val mclient = ApiConfig.getApiService().getSearch(username)
+        mclient.enqueue(object : Callback<ListProfile> {
             override fun onResponse(
-                call: Call<ListData>,
-                response: Response<ListData>
+                call: Call<ListProfile>,
+                response: Response<ListProfile>
             ) {
-                if(response.isSuccessful){
+                if (response.isSuccessful) {
                     val mresponse = response.body()
-                    if (mresponse != null){
+                    if (mresponse != null) {
                         setusername(mresponse.items)
+                    } else {
+                        Log.e(TAG, "${response.message()}")
                     }
-                    else{
-                        Log.e(TAG, "onFailure: ${response.message()}")
-                    }
+
                 }
             }
-
-            override fun onFailure(call: Call<ListData>, t: Throwable) {
-                Log.e(TAG, "onFailure: ${t.message}")
+            override fun onFailure(call: Call<ListProfile>, t: Throwable) {
+                Log.e(TAG, "${t.message}")
             }
-
         })
     }
 
-    private fun setusername(mitem: ArrayList<ProfileData?>?) {
-        if (mitem != null) {
-            for(mlogin in mitem){
-                if (mlogin != null) {
-                    val mdclient = ApiConfig.getApiService().getDetail(mlogin.login.toString())
-                    mdclient.enqueue(object : Callback<ProfileData>{
-                        override fun onResponse(
-                            call: Call<ProfileData>,
-                            dresponse: Response<ProfileData>
-                        ) {
-                            if (dresponse.isSuccessful){
-                                val mdrespon = dresponse.body()
-                                if (mdrespon != null){
-                                            val mprofile = ProfileData(
-                                                mdrespon.id,
-                                                mdrespon.avatarUrl,
-                                                mdrespon.name,
-                                                mdrespon.login,
-                                                mdrespon.location,
-                                                mdrespon.company,
-                                                mdrespon.followers,
-                                                mdrespon.following,
-                                                mdrespon.publicRepos
-                                            )
-                                            mlistp.add(mprofile)
-                                        }
-                                }
-                                else{
-                                    Log.e(TAG, "onFailure: ${dresponse.message()}")
-                                }
-                            }
-
-                        override fun onFailure(call: Call<ProfileData>, t: Throwable) {
-                            Log.e(TAG, "onFailure: ${t.message}")
-                        }
-                    })
-                }
-            }
+    private fun setusername(mitems: ArrayList<Items>) {
+        mlistprof.clear()
+        for (mitem in mitems) {
+            val mpprofile =Items(
+                mitem.avatarUrl,
+                mitem.login
+            )
+            mlistprof.add(mpprofile)
         }
+        Log.e(TAG, "mlistprof : ${mlistprof}")
+        showRecyclerList()
     }
 
-
     private fun showRecyclerList() {
+        showLoading(false)
         mBinding.apply {
-            if(application.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            if (application.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 rvlist.layoutManager = GridLayoutManager(root.context, 2)
-            }
-            else{
+            } else {
                 rvlist.layoutManager = LinearLayoutManager(root.context)
             }
-            val mlistprofileadapter = ListProfileAdapter(mlist)
+            val mlistprofileadapter = ListProfileAdapter(mlistprof)
             rvlist.adapter = mlistprofileadapter
         }
     }
 
-    companion object{
+    private fun showLoading(mload: Boolean) {
+
+        if (mload) {
+            mBinding.mainprogress.visibility = View.VISIBLE
+        } else {
+            mBinding.mainprogress.visibility = View.GONE
+        }
+    }
+    companion object {
         private const val TAG = "MainActivity"
-        const val EXTRA_SEARCH = "Andy"
     }
 }

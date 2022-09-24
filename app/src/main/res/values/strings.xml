@@ -14,4 +14,7 @@
     <string name="detailuser">Detail User</string>
     <string name="logo">Logo App</string>
     <string name="slistp">List Profile</string>
+    <string name="search">Search Username</string>
+    <string name="githubuser">Github User</string>
+    <string name="pickuser">Ini digunakan untuk menandakan bahwa Informasi tersebut dapat dipilih</string>
 </resources>

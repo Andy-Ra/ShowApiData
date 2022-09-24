@@ -28,34 +28,48 @@ class DetailUser : AppCompatActivity() {
 
     private fun putprocess() {
         showLoading(true)
-        val mclient = ApiConfig.getApiService().getDetail(EXTRA_LOGIN)
-        mclient.enqueue(object : Callback<ProfileData>{
+        val username = intent.getStringExtra(EXTRA_LOGIN).toString()
+        val mclient = ApiConfig.getApiService().getDetail(username)
+        mclient.enqueue(object : Callback<ProfileData> {
             override fun onResponse(
                 call: Call<ProfileData>,
                 response: Response<ProfileData>
             ) {
-               if(response.isSuccessful){
-                   showLoading(false)
-                   val mresponbody = response.body()
-                   if(mresponbody != null){
-                       mBinding.apply {
-                           Glide.with(root)
-                               .load(mresponbody.avatarUrl)
-                               .circleCrop()
-                               .into(imgdetail)
+                if (response.isSuccessful) {
+                    showLoading(false)
+                    val mresponbody = response.body()
+                    if (mresponbody != null) {
+                        mBinding.apply {
+                            if (mresponbody.location == null) {
+                                tvdlocation.text = StringBuilder(" - ")
+                            } else {
+                                tvdlocation.text = " " + mresponbody.location
+                            }
 
-                           tvdname.text = mresponbody.name
-                           tvduname.text = StringBuilder("@").append(mresponbody.login)
-                           tvdlocation.text = " "+mresponbody.location
-                           tvdcompany.text = " "+mresponbody.company
-                           tvdppeople.text = " ${mresponbody.following} ${getString(R.string.following)} \t ${mresponbody.followers} ${getString(R.string.follower)}"
-                           btndrepo.text = "${getString(R.string.repo)} (${mresponbody.publicRepos})"
-                       }
-                   }
-                   else{
-                       Log.e(TAG, "onFailure: ${response.message()}")
-                   }
-               }
+                            if (mresponbody.company == null) {
+                                tvdcompany.text = StringBuilder(" - ")
+
+                            } else {
+                                tvdcompany.text = " " + mresponbody.company
+                            }
+                            Glide.with(root)
+                                .load(mresponbody.avatarUrl)
+                                .circleCrop()
+                                .into(imgdetail)
+
+                            tvdname.text = mresponbody.name
+                            tvduname.text = StringBuilder("@").append(mresponbody.login)
+                            tvdppeople.text =
+                                " ${mresponbody.following} ${getString(R.string.following)} \t ${mresponbody.followers} ${
+                                    getString(R.string.follower)
+                                }"
+                            btndrepo.text =
+                                "${getString(R.string.repo)} (${mresponbody.publicRepos})"
+                        }
+                    } else {
+                        Log.e(TAG, "onFailure: ${response.message()}")
+                    }
+                }
             }
 
             override fun onFailure(call: Call<ProfileData>, t: Throwable) {
@@ -66,7 +80,6 @@ class DetailUser : AppCompatActivity() {
     }
 
     private fun showLoading(mload: Boolean) {
-
         if (mload) {
             mBinding.dprogress.visibility = View.VISIBLE
         } else {
@@ -74,8 +87,8 @@ class DetailUser : AppCompatActivity() {
         }
     }
 
-    companion object{
+    companion object {
         private const val TAG = "MainActivity"
-        const val EXTRA_LOGIN = "Andy-Ra"
+        const val EXTRA_LOGIN = "extra_login"
     }
 }
