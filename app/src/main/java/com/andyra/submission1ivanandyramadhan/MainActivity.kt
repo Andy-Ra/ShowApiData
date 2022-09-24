@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
     private fun setusername(mitems: ArrayList<Items>) {
         mlistprof.clear()
         for (mitem in mitems) {
-            val mpprofile =Items(
+            val mpprofile = Items(
                 mitem.avatarUrl,
                 mitem.login
             )
