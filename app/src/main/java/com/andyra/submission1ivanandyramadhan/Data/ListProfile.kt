@@ -6,6 +6,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ListProfile(
+    @field:SerializedName("total_count")
+    val total_count: Int,
+
     @field:SerializedName("items")
     val items: ArrayList<Items>
 ) : Parcelable

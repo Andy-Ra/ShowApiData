@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashScreen"
+    tools:context=".View.SplashScreen"
     android:background="#5496BF">
 
     <ImageView
@@ -14,6 +14,10 @@
         android:src="@drawable/githublogo"
         android:contentDescription="@string/logo"/>
 
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/tvSVersion"/>
 
     <TextView
         android:layout_width="wrap_content"

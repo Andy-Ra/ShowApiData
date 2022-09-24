@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.andyra.submission1ivanandyramadhan">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -14,23 +15,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Submission1IvanAndyRamadhan"
         tools:targetApi="31">
+        <activity android:name=".View.MainActivity" />
         <activity
-            android:name=".MainActivity"/>
-
-        <activity
-            android:name=".SplashScreen"
+            android:name=".View.SplashScreen"
             android:exported="true"
-            android:theme = "@style/Theme.AppCompat.Light.NoActionBar">>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name=".DetailUser"
+            android:name=".View.DetailUser"
             android:exported="false" />
+        <activity
+            android:name=".View.Follow.FollowActivity"
+            android:exported="false"/>
     </application>
 
 </manifest>

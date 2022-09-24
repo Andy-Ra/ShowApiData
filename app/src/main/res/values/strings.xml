@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Submission1 Ivan Andy Ramadhan</string>
+    <string name="app_name">Submission2 Ivan Andy Ramadhan</string>
     <string name="Name">name</string>
     <string name="username">Username</string>
     <string name="photodetail">Ini adalah foto profil dari detail user</string>
@@ -17,4 +17,6 @@
     <string name="search">Search Username</string>
     <string name="githubuser">Github User</string>
     <string name="pickuser">Ini digunakan untuk menandakan bahwa Informasi tersebut dapat dipilih</string>
+    <string name="noresult">Github User Not Found</string>
+    <string name="noone">Nothing One Else</string>
 </resources>

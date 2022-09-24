@@ -1,4 +1,4 @@
-package com.andyra.submission1ivanandyramadhan
+package com.andyra.submission1ivanandyramadhan.View
 
 import android.app.SearchManager
 import android.content.Context
@@ -15,6 +15,7 @@ import com.andyra.submission1ivanandyramadhan.Adapter.ListProfileAdapter
 import com.andyra.submission1ivanandyramadhan.Api.ApiConfig
 import com.andyra.submission1ivanandyramadhan.Data.Items
 import com.andyra.submission1ivanandyramadhan.Data.ListProfile
+import com.andyra.submission1ivanandyramadhan.R
 import com.andyra.submission1ivanandyramadhan.databinding.ActivityMainBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,7 +29,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
         setTitle(R.string.slistp)
@@ -63,6 +63,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun getusername() {
+        showItems()
         val mclient = ApiConfig.getApiService().getSearch(username)
         mclient.enqueue(object : Callback<ListProfile> {
             override fun onResponse(
@@ -72,7 +73,16 @@ class MainActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val mresponse = response.body()
                     if (mresponse != null) {
-                        setusername(mresponse.items)
+                        if(mresponse.total_count > 0){
+                            setusername(mresponse.items)
+                            mBinding.apply {
+                                rvlist.visibility = View.VISIBLE
+                            }
+                        }
+                        else{
+                            mBinding.tvamnf.visibility = View.VISIBLE
+                            showLoading(false)
+                        }
                     } else {
                         Log.e(TAG, "${response.message()}")
                     }
@@ -94,7 +104,6 @@ class MainActivity : AppCompatActivity() {
             )
             mlistprof.add(mpprofile)
         }
-        Log.e(TAG, "mlistprof : ${mlistprof}")
         showRecyclerList()
     }
 
@@ -111,8 +120,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun showItems(){
+        mBinding.apply {
+            tvamnf.visibility = View.GONE
+            rvlist.visibility = View.GONE
+        }
+    }
     private fun showLoading(mload: Boolean) {
-
         if (mload) {
             mBinding.mainprogress.visibility = View.VISIBLE
         } else {
