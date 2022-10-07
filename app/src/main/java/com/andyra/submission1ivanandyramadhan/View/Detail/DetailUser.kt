@@ -1,16 +1,18 @@
-package com.andyra.submission1ivanandyramadhan.View
+package com.andyra.submission1ivanandyramadhan.View.Detail
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.annotation.IntDef
+import androidx.annotation.StringRes
+import com.andyra.submission1ivanandyramadhan.Adapter.FragmentFollowAdapter
 import com.andyra.submission1ivanandyramadhan.Api.ApiConfig
 import com.andyra.submission1ivanandyramadhan.Data.ProfileData
 import com.andyra.submission1ivanandyramadhan.R
-import com.andyra.submission1ivanandyramadhan.View.Follow.FollowActivity
 import com.andyra.submission1ivanandyramadhan.databinding.ActivityDetailUserBinding
 import com.bumptech.glide.Glide
+import com.google.android.material.tabs.TabLayoutMediator
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,25 +20,20 @@ import retrofit2.Response
 class DetailUser : AppCompatActivity() {
     private lateinit var mBinding: ActivityDetailUserBinding
     var username_detail: String = ""
+    var arraytab : Array<String> = emptyArray()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTitle(R.string.detailuser)
         mBinding = ActivityDetailUserBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
+        showLoading(true)
 
-        putprocess()
         getusername()
-        mBinding.tvdppeople.setOnClickListener() {
-            val pindah = Intent(this, FollowActivity::class.java)
-            pindah.putExtra(FollowActivity.EXTRA_USER, username_detail)
-            startActivity(pindah)
-        }
+        putprocess()
     }
 
     private fun putprocess() {
-        getusername()
-        showLoading(true)
         val mclient = ApiConfig.getApiService().getDetail(username_detail)
         mclient.enqueue(object : Callback<ProfileData> {
             override fun onResponse(
@@ -44,9 +41,9 @@ class DetailUser : AppCompatActivity() {
                 response: Response<ProfileData>
             ) {
                 if (response.isSuccessful) {
-                    showLoading(false)
                     val mresponbody = response.body()
                     if (mresponbody != null) {
+                        showLoading(false)
                         mBinding.apply {
                             if (mresponbody.location == null) {
                                 tvdlocation.text = StringBuilder(" - ")
@@ -67,16 +64,16 @@ class DetailUser : AppCompatActivity() {
 
                             tvdname.text = mresponbody.name
                             tvduname.text = StringBuilder("@").append(mresponbody.login)
-                            tvdppeople.text = StringBuilder(
-                                "${mresponbody.following} ${getString(R.string.following)} \t ${mresponbody.followers} ${
-                                    getString(R.string.follower)
-                                }"
-                            )
-                            btndrepo.text = StringBuilder("${getString(R.string.repo)} (${mresponbody.publicRepos})")
+                            tvdrepo.text = " ${mresponbody.publicRepos} ${getString(R.string.repo)}"
                         }
+                        arraytab = arrayOf(
+                            "${getString(R.string.following)} (${mresponbody.following})",
+                            "${getString(R.string.follower)} (${mresponbody.followers})"
+                        )
                     } else {
                         Log.e(TAG, "onFailure: ${response.message()}")
                     }
+                    showfollower()
                 }
             }
 
@@ -87,20 +84,37 @@ class DetailUser : AppCompatActivity() {
         })
     }
 
-    private fun showLoading(mload: Boolean) {
-        if (mload) {
-            mBinding.dprogress.visibility = View.VISIBLE
-        } else {
-            mBinding.dprogress.visibility = View.GONE
+    private fun showfollower() {
+        val mFollowAdapter = FragmentFollowAdapter(this)
+        mFollowAdapter.followuser = username_detail
+        mBinding.apply {
+            vpfollow.adapter = mFollowAdapter
+            TabLayoutMediator(tabsfollow, vpfollow) { mtab, mpos ->
+                mtab.text = arraytab[mpos]
+            }.attach()
         }
+        supportActionBar?.elevation = 0f
     }
 
     private fun getusername() {
         username_detail = intent.getStringExtra(EXTRA_LOGIN).toString()
     }
 
+    private fun showLoading(mload: Boolean) {
+        if (mload) {
+            mBinding.pgdetail.visibility = View.VISIBLE
+        } else {
+            mBinding.pgdetail.visibility = View.INVISIBLE
+        }
+    }
     companion object {
+        private lateinit var following: String
+        private lateinit var follower: String
         private const val TAG = "DetailUser"
         const val EXTRA_LOGIN = "extra_login"
+
+        @StringRes
+        private val TAB_TITLES = intArrayOf(
+        )
     }
 }

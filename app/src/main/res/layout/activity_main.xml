@@ -4,24 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".View.MainActivity">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tvamnf"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/noresult"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:text="@string/noresult" />
+
     <ProgressBar
+        android:id="@+id/mainprogress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="25dp"
-        android:id="@+id/mainprogress"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="25dp" />
 
 </RelativeLayout>

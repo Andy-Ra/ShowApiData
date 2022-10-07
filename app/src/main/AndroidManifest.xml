@@ -28,11 +28,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".View.DetailUser"
+            android:name=".View.Detail.DetailUser"
             android:exported="false" />
-        <activity
-            android:name=".View.Follow.FollowActivity"
-            android:exported="false"/>
     </application>
 
 </manifest>

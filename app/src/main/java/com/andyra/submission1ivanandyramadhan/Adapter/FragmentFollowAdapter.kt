@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.andyra.submission1ivanandyramadhan.View.Follow.FollowFragment
+import com.andyra.submission1ivanandyramadhan.View.Detail.FollowFragment
 
 class FragmentFollowAdapter (activity: AppCompatActivity) : FragmentStateAdapter(activity) {
     var followuser: String = ""

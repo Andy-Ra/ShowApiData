@@ -1,12 +1,14 @@
 package com.andyra.submission1ivanandyramadhan.Api
 
 import androidx.viewbinding.BuildConfig
+import com.andyra.submission1ivanandyramadhan.R
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiConfig {
+    val api:String = R.string.noone.toString()
     companion object {
         fun getApiService(): ApiServices {
             val loggingInterceptor =

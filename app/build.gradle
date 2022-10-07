@@ -5,6 +5,8 @@ plugins {
 }
 
 android {
+    def Properties mproperties = new Properties()
+    mproperties.load(new FileInputStream(rootProject.file("local.properties")))
     compileSdk 32
 
     defaultConfig {
@@ -15,6 +17,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        resValue "string", "apikey", mproperties.getProperty("api", "")
     }
 
     buildTypes {
@@ -33,6 +36,8 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+
 }
 
 dependencies {

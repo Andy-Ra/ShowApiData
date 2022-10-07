@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cvlist"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cvlist"
     android:layout_margin="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,45 +12,45 @@
         android:layout_height="wrap_content"
         android:padding="5dp">
 
-
         <ImageView
+            android:id="@+id/imgitempp"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/imgitempp"
+            android:layout_marginLeft="5dp"
+            tools:contentDescription="@string/photodetail"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="5dp"
-            android:src="@drawable/user1"
-            android:contentDescription="@string/photodetail"/>
+            tools:src="@drawable/user1" />
+
+        <TextView
+            android:id="@+id/tvitemuser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            tools:text="@string/username"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imgitempp"
+            app:layout_constraintTop_toTopOf="@+id/imgitempp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvitemuser"
-            android:textSize="17dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/imgitempp"
-            app:layout_constraintTop_toTopOf="@+id/imgitempp"
             android:layout_marginStart="15dp"
-            android:text="@string/username"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="10dp"
+            android:text="@string/githubuser"
+            android:textSize="10sp"
             app:layout_constraintStart_toEndOf="@+id/imgitempp"
-            app:layout_constraintTop_toBottomOf="@id/tvitemuser"
-            android:layout_marginStart="15dp"
-            android:text="@string/githubuser"/>
+            app:layout_constraintTop_toBottomOf="@id/tvitemuser" />
 
         <ImageView
             android:layout_width="25dp"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginRight="5dp"
+            tools:contentDescription="@string/pickuser"
             android:src="@drawable/ic_sharp_arrow_forward_24"
-            android:contentDescription="@string/pickuser"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

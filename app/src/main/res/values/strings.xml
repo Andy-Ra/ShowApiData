@@ -2,11 +2,11 @@
     <string name="app_name">Submission2 Ivan Andy Ramadhan</string>
     <string name="Name">name</string>
     <string name="username">Username</string>
-    <string name="photodetail">Ini adalah foto profil dari detail user</string>
+    <string name="photodetail">This is photo profiles</string>
     <string name="location">Location</string>
     <string name="company">Company</string>
     <string name="follower">Followers</string>
-    <string name="repo">Repository</string>
+    <string name="repo">Repositories</string>
     <string name="project">Projects</string>
     <string name="stars">Stars</string>
     <string name="dcommingsoon">Detail Page (Coming Soon)</string>
@@ -16,7 +16,8 @@
     <string name="slistp">List Profile</string>
     <string name="search">Search Username</string>
     <string name="githubuser">Github User</string>
-    <string name="pickuser">Ini digunakan untuk menandakan bahwa Informasi tersebut dapat dipilih</string>
+    <string name="pickuser">If user Choose One of Github user list</string>
     <string name="noresult">Github User Not Found</string>
     <string name="noone">Nothing One Else</string>
+    <string name="tes">https://api.github.com/</string>
 </resources>

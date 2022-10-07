@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.andyra.submission1ivanandyramadhan.Data.Items
-import com.andyra.submission1ivanandyramadhan.View.DetailUser
+import com.andyra.submission1ivanandyramadhan.View.Detail.DetailUser
 import com.andyra.submission1ivanandyramadhan.R
 import com.bumptech.glide.Glide
 

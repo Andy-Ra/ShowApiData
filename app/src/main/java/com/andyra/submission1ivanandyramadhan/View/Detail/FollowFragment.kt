@@ -1,4 +1,4 @@
-package com.andyra.submission1ivanandyramadhan.View.Follow
+package com.andyra.submission1ivanandyramadhan.View.Detail
 
 import android.content.res.Configuration
 import android.os.Bundle
