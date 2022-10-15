@@ -20,6 +20,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,8 +30,7 @@ class DetailUser : AppCompatActivity() {
     var dUsername: String = ""
     var dAvatar: String = ""
     var arraytab: Array<String> = emptyArray()
-    var isFav = false
-
+    var isFav: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTitle(R.string.detailuser)
@@ -111,20 +111,28 @@ class DetailUser : AppCompatActivity() {
     }
 
     private fun getFavManager() {
+        Log.e(TAG, "ara ${dUsername}")
         val mFavViewModel = obtainViewModel(this@DetailUser)
-        mFavViewModel.checkFavVM(dUsername)
-
-        if(mFavViewModel != null){
-            mBinding.tbFavManager.isChecked = true
-            isFav = true
-        }
-        else{
-            mBinding.tbFavManager.isChecked = false
-            isFav = false
+        isFav = false
+        CoroutineScope(Dispatchers.IO).launch {
+            val mCheckUser = mFavViewModel.checkFavVM(dUsername)
+            withContext(Dispatchers.Main) {
+                if (mCheckUser != null){
+                    if(mCheckUser.count() > 0) {
+                        Log.e(TAG, "ara isi ${mCheckUser}")
+                        mBinding.tbFavManager.isChecked = true
+                        isFav = true
+                    }
+                    else {
+                        mBinding.tbFavManager.isChecked = false
+                        isFav = false
+                    }
+                }
+            }
         }
 
         mBinding.tbFavManager.setOnClickListener {
-            if (isFav) {
+            if (!isFav) {
                 mFavViewModel.insertFavVM(dAvatar, dUsername)
                 Toast.makeText(this, getString(R.string.add_fav_user), Toast.LENGTH_SHORT)
                     .show()
@@ -134,9 +142,11 @@ class DetailUser : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.delete_from_fav), Toast.LENGTH_SHORT)
                     .show()
             }
-            mBinding.tbFavManager.isChecked = isFav
+            mBinding.tbFavManager.isChecked 
+            getFavManager()
         }
     }
+
     private fun getUsername() {
         dUsername = intent.getStringExtra(EXTRA_LOGIN).toString()
     }
@@ -153,7 +163,8 @@ class DetailUser : AppCompatActivity() {
         if (item.itemId == android.R.id.home) this.finish()
         return super.onOptionsItemSelected(item)
     }
-    private fun obtainViewModel(mFavActivity: DetailUser): FavViewModel{
+
+    private fun obtainViewModel(mFavActivity: DetailUser): FavViewModel {
         val factory = FavVMFactory.getInstance(mFavActivity.application)
         return ViewModelProvider(mFavActivity, factory)[FavViewModel::class.java]
     }

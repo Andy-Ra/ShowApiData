@@ -25,11 +25,10 @@ class FavActivity : AppCompatActivity() {
         setTitle(R.string.title_activity_fav)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         getDataFav()
-
     }
 
+
     private fun getDataFav() {
-        mListFav.clear()
         showMaterial()
         
         val mFavViewModel = obtainViewModel(this@FavActivity)
@@ -47,6 +46,7 @@ class FavActivity : AppCompatActivity() {
     }
 
     private fun setDAtaFav(mapData: List<FavData>) {
+        mListFav.clear()
         for (data in mapData) {
             val mFoll = Items(
                 data.avatarUrl,

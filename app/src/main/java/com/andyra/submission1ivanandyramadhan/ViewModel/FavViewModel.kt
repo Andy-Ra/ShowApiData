@@ -21,7 +21,5 @@ class FavViewModel(application: Application) : ViewModel() {
         mFavRepo.deleteFav(mLogin)
     }
 
-    fun checkFavVM(mLogin:String) {
-        mFavRepo.checkUserFav(mLogin)
-    }
+    fun checkFavVM(mLogin:String) :List<FavData> = mFavRepo.checkUserFav(mLogin)
 }

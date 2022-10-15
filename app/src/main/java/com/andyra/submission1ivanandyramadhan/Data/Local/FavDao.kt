@@ -9,12 +9,12 @@ interface FavDao {
     fun getListFav(): LiveData<List<FavData>>
 
     @Query("SELECT * FROM FavData WHERE login = :login")
-    fun getCheckFav(login: String): LiveData<List<FavData>>
+    fun getCheckFav(login: String): List<FavData>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insUserFav(mFavData: FavData)
 
-    @Delete
-    fun dltUserFav(login: String)
+    @Query("DELETE FROM FavData WHERE login = :login")
+    abstract fun dltUserFav(login: String)
 
 }
