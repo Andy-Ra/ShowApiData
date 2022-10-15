@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/darkmode"
+        android:icon="@drawable/ic_outline_dark_mode_24"
+        android:title="@string/darkmode"
+        app:showAsAction="collapseActionView|always" />
+
+    <item
+        android:id="@+id/lightmode"
+        android:icon="@drawable/ic_outline_wb_sunny_24"
+        android:title="@string/lightmode"
+        app:showAsAction="collapseActionView|always" />
+
+</menu>

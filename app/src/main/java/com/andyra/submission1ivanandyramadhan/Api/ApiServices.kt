@@ -1,6 +1,8 @@
 package com.andyra.submission1ivanandyramadhan.Api
 
-import com.andyra.submission1ivanandyramadhan.Data.*
+import com.andyra.submission1ivanandyramadhan.Data.Remote.FollowData
+import com.andyra.submission1ivanandyramadhan.Data.Remote.ListProfile
+import com.andyra.submission1ivanandyramadhan.Data.Remote.ProfileData
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -16,12 +18,12 @@ interface ApiServices {
     ): Call<ProfileData>
 
     @GET("users/{login}/following")
-    fun getfollowing(
+    fun getFollowing(
         @Path("login") login: String
     ): Call<FollowData>
 
     @GET("users/{login}/followers")
-    fun getfollowers(
+    fun getFollowers(
         @Path("login") login: String
     ): Call<FollowData>
 

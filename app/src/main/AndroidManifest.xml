@@ -20,7 +20,7 @@
             android:name=".View.SplashScreen"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-            >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,6 +30,9 @@
         <activity
             android:name=".View.Detail.DetailUser"
             android:exported="false" />
+    <activity
+        android:name=".View.FavActivity"
+        android:exported="false" />
     </application>
 
 </manifest>

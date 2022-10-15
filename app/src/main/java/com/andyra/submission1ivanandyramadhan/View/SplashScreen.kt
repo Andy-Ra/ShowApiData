@@ -4,21 +4,23 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import com.andyra.submission1ivanandyramadhan.BuildConfig
+import com.andyra.submission1ivanandyramadhan.R
 import com.andyra.submission1ivanandyramadhan.databinding.ActivitySplashScreenBinding
 
 class SplashScreen : AppCompatActivity() {
-    private lateinit var mbinding: ActivitySplashScreenBinding
+    private lateinit var mBinding: ActivitySplashScreenBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mbinding = ActivitySplashScreenBinding.inflate(layoutInflater)
-        setContentView(mbinding.root)
+        mBinding = ActivitySplashScreenBinding.inflate(layoutInflater)
+        setContentView(mBinding.root)
 
-        Handler().postDelayed({
+        Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         }, 1500)
-        mbinding.tvSVersion.text = StringBuilder("Version ").append(BuildConfig.VERSION_NAME)
+        mBinding.tvSVersion.text = StringBuilder(getString(R.string.tVersion)).append(BuildConfig.VERSION_NAME)
     }
 }

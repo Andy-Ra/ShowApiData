@@ -2,19 +2,22 @@ package com.andyra.submission1ivanandyramadhan.View
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andyra.submission1ivanandyramadhan.Adapter.ListProfileAdapter
 import com.andyra.submission1ivanandyramadhan.Api.ApiConfig
-import com.andyra.submission1ivanandyramadhan.Data.Items
-import com.andyra.submission1ivanandyramadhan.Data.ListProfile
+import com.andyra.submission1ivanandyramadhan.Data.Remote.Items
+import com.andyra.submission1ivanandyramadhan.Data.Remote.ListProfile
 import com.andyra.submission1ivanandyramadhan.R
 import com.andyra.submission1ivanandyramadhan.databinding.ActivityMainBinding
 import retrofit2.Call
@@ -23,9 +26,9 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityMainBinding
-    private val mlistprof = ArrayList<Items>()
+    private val mListProf = ArrayList<Items>()
 
-    private var username: String = "Andy-Ra"
+    private var username: String = defuser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,23 +37,28 @@ class MainActivity : AppCompatActivity() {
         setTitle(R.string.slistp)
 
         showLoading(true)
-        getusername()
+        getUsername()
         mBinding.rvlist.setHasFixedSize(true)
     }
 
     override fun onCreateOptionsMenu(mmenu: Menu): Boolean {
         val menuinflate = menuInflater
-        menuinflate.inflate(R.menu.option_menu, mmenu)
-        val msearchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val msearchView = mmenu.findItem(R.id.searchuser).actionView as SearchView
+        menuinflate.inflate(R.menu.search_bar, mmenu)
+        menuinflate.inflate(R.menu.fav_bar, mmenu)
+        menuinflate.inflate(R.menu.darkmode_bar, mmenu)
 
-        msearchView.setSearchableInfo(msearchManager.getSearchableInfo(componentName))
-        msearchView.queryHint = resources.getString(R.string.search)
-        msearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        val mSearchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val mSearchView = mmenu.findItem(R.id.searchuser).actionView as SearchView
+
+        mSearchView.setSearchableInfo(mSearchManager.getSearchableInfo(componentName))
+        mSearchView.queryHint = resources.getString(R.string.search)
+        mSearchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 showLoading(true)
                 username = query
-                getusername()
+                getUsername()
+
+                mSearchView.clearFocus()
                 return true
             }
 
@@ -58,11 +66,30 @@ class MainActivity : AppCompatActivity() {
                 return false
             }
         })
+
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.favuser -> {
+                val moving = Intent(this, FavActivity::class.java)
+                startActivity(moving)
+                return true
+            }
+            R.id.darkmode -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                return true
+            }
+            R.id.lightmode -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                return true
+            }
+            else -> return true
+        }
+    }
 
-    private fun getusername() {
+    private fun getUsername() {
         showItems()
         val mclient = ApiConfig.getApiService().getSearch(username)
         mclient.enqueue(object : Callback<ListProfile> {
@@ -73,36 +100,36 @@ class MainActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val mresponse = response.body()
                     if (mresponse != null) {
-                        if(mresponse.total_count > 0){
+                        if (mresponse.total_count > 0) {
                             setusername(mresponse.items)
                             mBinding.apply {
                                 rvlist.visibility = View.VISIBLE
                             }
-                        }
-                        else{
+                        } else {
                             mBinding.tvamnf.visibility = View.VISIBLE
                             showLoading(false)
                         }
                     } else {
-                        Log.e(TAG, "${response.message()}")
+                        Log.e(TAG, response.message().toString())
                     }
 
                 }
             }
+
             override fun onFailure(call: Call<ListProfile>, t: Throwable) {
-                Log.e(TAG, "${t.message}")
+                Log.e(TAG, t.message.toString())
             }
         })
     }
 
     private fun setusername(mitems: ArrayList<Items>) {
-        mlistprof.clear()
+        mListProf.clear()
         for (mitem in mitems) {
             val mpprofile = Items(
                 mitem.avatarUrl,
                 mitem.login
             )
-            mlistprof.add(mpprofile)
+            mListProf.add(mpprofile)
         }
         showRecyclerList()
     }
@@ -115,17 +142,18 @@ class MainActivity : AppCompatActivity() {
             } else {
                 rvlist.layoutManager = LinearLayoutManager(root.context)
             }
-            val mlistprofileadapter = ListProfileAdapter(mlistprof)
-            rvlist.adapter = mlistprofileadapter
+            val mListProfileAdapter = ListProfileAdapter(mListProf)
+            rvlist.adapter = mListProfileAdapter
         }
     }
 
-    private fun showItems(){
+    private fun showItems() {
         mBinding.apply {
             tvamnf.visibility = View.GONE
             rvlist.visibility = View.GONE
         }
     }
+
     private fun showLoading(mload: Boolean) {
         if (mload) {
             mBinding.mainprogress.visibility = View.VISIBLE
@@ -133,7 +161,9 @@ class MainActivity : AppCompatActivity() {
             mBinding.mainprogress.visibility = View.GONE
         }
     }
+
     companion object {
         private const val TAG = "MainActivity"
+        private const val defuser = "Andy-Ra"
     }
 }

@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.andyra.submission1ivanandyramadhan.View.Detail.FollowFragment
 
 class FragmentFollowAdapter (activity: AppCompatActivity) : FragmentStateAdapter(activity) {
-    var followuser: String = ""
+    var followUser: String = ""
     override fun getItemCount(): Int {
         return 2
     }
@@ -16,7 +16,7 @@ class FragmentFollowAdapter (activity: AppCompatActivity) : FragmentStateAdapter
         val fragment = FollowFragment()
         fragment.arguments = Bundle().apply {
             putInt(FollowFragment.ARG_SECTION_NUMBER, position + 1)
-            putString(FollowFragment.EXTRA_USERNAME, followuser)
+            putString(FollowFragment.EXTRA_USERNAME, followUser)
         }
         return fragment
     }

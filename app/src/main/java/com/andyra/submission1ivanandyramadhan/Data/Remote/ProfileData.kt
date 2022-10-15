@@ -1,4 +1,4 @@
-package com.andyra.submission1ivanandyramadhan.Data
+package com.andyra.submission1ivanandyramadhan.Data.Remote
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

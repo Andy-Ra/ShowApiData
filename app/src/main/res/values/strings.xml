@@ -1,23 +1,36 @@
 <resources>
-    <string name="app_name">Submission2 Ivan Andy Ramadhan</string>
+    <string name="app_name">Submission3 Ivan Andy Ramadhan</string>
+    <string name="dark_mode">Dark Mode</string>
+
+    <!--Title-->
+    <string name="detailuser">User Detail</string>
+    <string name="slistp">List Profile</string>
+    <string name="title_activity_fav">Favorite Lists</string>
+    <string name="tVersion">Version </string>
+
+    <!--Material-->
     <string name="Name">name</string>
     <string name="username">Username</string>
-    <string name="photodetail">This is photo profiles</string>
     <string name="location">Location</string>
     <string name="company">Company</string>
+    <string name="following">Following</string>
     <string name="follower">Followers</string>
     <string name="repo">Repositories</string>
-    <string name="project">Projects</string>
-    <string name="stars">Stars</string>
-    <string name="dcommingsoon">Detail Page (Coming Soon)</string>
-    <string name="following">Following</string>
-    <string name="detailuser">Detail User</string>
+
+    <!--Any-->
     <string name="logo">Logo App</string>
-    <string name="slistp">List Profile</string>
     <string name="search">Search Username</string>
     <string name="githubuser">Github User</string>
-    <string name="pickuser">If user Choose One of Github user list</string>
     <string name="noresult">Github User Not Found</string>
     <string name="noone">Nothing One Else</string>
-    <string name="tes">https://api.github.com/</string>
+
+    <!--Detail-->
+    <string name="photodetail">This is photo profiles</string>
+    <string name="pickuser">If user Choose One of Github user list</string>
+    <string name="darkmode">Switch to Dark Mode</string>
+    <string name="lightmode">Switch to Light Mode</string>
+    <string name="detailfav">Showing Favorite List</string>
+    <string name="FavManagerDetail">This toggle Button for add and remove fav user list</string>
+    <string name="add_fav_user">Added in Favorite List</string>
+    <string name="delete_from_fav">Deleted in Favorite List</string>
 </resources>

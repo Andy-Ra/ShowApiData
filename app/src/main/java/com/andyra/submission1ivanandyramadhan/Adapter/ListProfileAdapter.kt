@@ -7,44 +7,44 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.andyra.submission1ivanandyramadhan.Data.Items
+import com.andyra.submission1ivanandyramadhan.Data.Remote.Items
 import com.andyra.submission1ivanandyramadhan.View.Detail.DetailUser
 import com.andyra.submission1ivanandyramadhan.R
 import com.bumptech.glide.Glide
 
-class ListProfileAdapter(val mlist: ArrayList<Items>) : RecyclerView.Adapter<ListProfileAdapter.LisViewHolder>() {
+class ListProfileAdapter(private val mList: ArrayList<Items>) : RecyclerView.Adapter<ListProfileAdapter.LisViewHolder>() {
     class LisViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        var tvuser: TextView = itemView.findViewById(R.id.tvitemuser)
-        var imgphoto: ImageView = itemView.findViewById(R.id.imgitempp)
+        var tvUser: TextView = itemView.findViewById(R.id.tvitemuser)
+        var imgPhoto: ImageView = itemView.findViewById(R.id.imgitempp)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LisViewHolder {
-        val mview: View = LayoutInflater.from(parent.context).inflate(R.layout.itemlistuser, parent, false)
-        return LisViewHolder(mview)
+        val mView: View = LayoutInflater.from(parent.context).inflate(R.layout.itemlistuser, parent, false)
+        return LisViewHolder(mView)
     }
 
-    override fun onBindViewHolder(mholder: LisViewHolder, mposition: Int) {
-        val(photo, username) = mlist[mposition]
-        mholder.apply {
+    override fun onBindViewHolder(mHolder: LisViewHolder, mposition: Int) {
+        val(photo, username) = mList[mposition]
+        mHolder.apply {
             Glide.with(itemView.context)
                 .load(photo)
                 .circleCrop()
-                .into(imgphoto)
-            tvuser.text = username
+                .into(imgPhoto)
+            tvUser.text = username
         }
 
-        mholder.itemView.setOnClickListener(){
-            val mcontext = mholder.itemView.context
-            val sendlogin = mlist[mposition].login
-            val pindah = Intent(mcontext, DetailUser::class.java)
+        mHolder.itemView.setOnClickListener(){
+            val mContext = mHolder.itemView.context
+            val sendLogin = mList[mposition].login
+            val move = Intent(mContext, DetailUser::class.java)
 
-            pindah.putExtra(DetailUser.EXTRA_LOGIN, sendlogin)
-            mcontext.startActivity(pindah)
+            move.putExtra(DetailUser.EXTRA_LOGIN, sendLogin)
+            mContext.startActivity(move)
 
         }
 
     }
 
-    override fun getItemCount(): Int = mlist.size
+    override fun getItemCount(): Int = mList.size
 
 }

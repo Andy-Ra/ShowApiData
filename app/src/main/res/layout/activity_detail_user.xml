@@ -24,10 +24,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgdetail"
-            android:layout_marginTop="25dp"
-            tools:text="@string/Name"
-            tools:textSize="20sp"
-            tools:textStyle="bold" />
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            tools:text="@string/Name" />
 
         <TextView
             android:id="@+id/tvduname"
@@ -35,6 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvdname"
             android:layout_marginTop="5dp"
+            android:gravity="center"
             tools:text="@string/username" />
 
         <TextView
@@ -56,6 +58,20 @@
             android:layout_toRightOf="@id/tvdlocation"
             android:drawableLeft="@drawable/ic_baseline_domain_16"
             tools:text="@string/company" />
+
+        <ToggleButton
+            android:id="@+id/tbFavManager"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/tvduname"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="15dp"
+            android:background="@drawable/ic_baseline_favorite_border_24"
+            android:contentDescription="@string/FavManagerDetail"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+
 
         <TextView
             android:id="@+id/tvdrepo"
@@ -93,9 +109,9 @@
         android:background="@android:color/darker_gray" />
 
     <ProgressBar
+        android:id="@+id/pgdetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="25dp"
-        android:id="@+id/pgdetail"/>
+        android:layout_marginBottom="25dp" />
 </RelativeLayout>

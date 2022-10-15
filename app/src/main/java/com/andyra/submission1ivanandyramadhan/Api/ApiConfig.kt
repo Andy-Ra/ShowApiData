@@ -8,7 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiConfig {
-    val api:String = R.string.noone.toString()
+//    val api:String = R.string.noone.toString()
     companion object {
         fun getApiService(): ApiServices {
             val loggingInterceptor =

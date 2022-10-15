@@ -3,24 +3,33 @@ package com.andyra.submission1ivanandyramadhan.View.Detail
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
-import androidx.annotation.IntDef
-import androidx.annotation.StringRes
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.andyra.submission1ivanandyramadhan.Adapter.FragmentFollowAdapter
 import com.andyra.submission1ivanandyramadhan.Api.ApiConfig
-import com.andyra.submission1ivanandyramadhan.Data.ProfileData
+import com.andyra.submission1ivanandyramadhan.Data.Remote.ProfileData
 import com.andyra.submission1ivanandyramadhan.R
+import com.andyra.submission1ivanandyramadhan.View.FavActivity
+import com.andyra.submission1ivanandyramadhan.ViewModel.FavVMFactory
+import com.andyra.submission1ivanandyramadhan.ViewModel.FavViewModel
 import com.andyra.submission1ivanandyramadhan.databinding.ActivityDetailUserBinding
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class DetailUser : AppCompatActivity() {
     private lateinit var mBinding: ActivityDetailUserBinding
-    var username_detail: String = ""
-    var arraytab : Array<String> = emptyArray()
+    var dUsername: String = ""
+    var dAvatar: String = ""
+    var arraytab: Array<String> = emptyArray()
+    var isFav = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,12 +38,15 @@ class DetailUser : AppCompatActivity() {
         setContentView(mBinding.root)
         showLoading(true)
 
-        getusername()
-        putprocess()
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        getUsername()
+        putProcess()
     }
 
-    private fun putprocess() {
-        val mclient = ApiConfig.getApiService().getDetail(username_detail)
+
+    private fun putProcess() {
+        val mclient = ApiConfig.getApiService().getDetail(dUsername)
         mclient.enqueue(object : Callback<ProfileData> {
             override fun onResponse(
                 call: Call<ProfileData>,
@@ -65,28 +77,30 @@ class DetailUser : AppCompatActivity() {
                             tvdname.text = mresponbody.name
                             tvduname.text = StringBuilder("@").append(mresponbody.login)
                             tvdrepo.text = " ${mresponbody.publicRepos} ${getString(R.string.repo)}"
+                            dAvatar = StringBuilder(mresponbody.avatarUrl).toString()
                         }
                         arraytab = arrayOf(
                             "${getString(R.string.following)} (${mresponbody.following})",
                             "${getString(R.string.follower)} (${mresponbody.followers})"
                         )
                     } else {
-                        Log.e(TAG, "onFailure: ${response.message()}")
+                        Log.e(TAG, response.message().toString())
                     }
-                    showfollower()
+                    showFollower()
+                    getFavManager()
                 }
             }
 
             override fun onFailure(call: Call<ProfileData>, t: Throwable) {
-                Log.e(TAG, "onFailure: ${t.message}")
+                Log.e(TAG, t.message.toString())
             }
 
         })
     }
 
-    private fun showfollower() {
+    private fun showFollower() {
         val mFollowAdapter = FragmentFollowAdapter(this)
-        mFollowAdapter.followuser = username_detail
+        mFollowAdapter.followUser = dUsername
         mBinding.apply {
             vpfollow.adapter = mFollowAdapter
             TabLayoutMediator(tabsfollow, vpfollow) { mtab, mpos ->
@@ -96,8 +110,35 @@ class DetailUser : AppCompatActivity() {
         supportActionBar?.elevation = 0f
     }
 
-    private fun getusername() {
-        username_detail = intent.getStringExtra(EXTRA_LOGIN).toString()
+    private fun getFavManager() {
+        val mFavViewModel = obtainViewModel(this@DetailUser)
+        mFavViewModel.checkFavVM(dUsername)
+
+        if(mFavViewModel != null){
+            mBinding.tbFavManager.isChecked = true
+            isFav = true
+        }
+        else{
+            mBinding.tbFavManager.isChecked = false
+            isFav = false
+        }
+
+        mBinding.tbFavManager.setOnClickListener {
+            if (isFav) {
+                mFavViewModel.insertFavVM(dAvatar, dUsername)
+                Toast.makeText(this, getString(R.string.add_fav_user), Toast.LENGTH_SHORT)
+                    .show()
+            }
+            else {
+                mFavViewModel.deleteFavVM(dUsername)
+                Toast.makeText(this, getString(R.string.delete_from_fav), Toast.LENGTH_SHORT)
+                    .show()
+            }
+            mBinding.tbFavManager.isChecked = isFav
+        }
+    }
+    private fun getUsername() {
+        dUsername = intent.getStringExtra(EXTRA_LOGIN).toString()
     }
 
     private fun showLoading(mload: Boolean) {
@@ -107,14 +148,18 @@ class DetailUser : AppCompatActivity() {
             mBinding.pgdetail.visibility = View.INVISIBLE
         }
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) this.finish()
+        return super.onOptionsItemSelected(item)
+    }
+    private fun obtainViewModel(mFavActivity: DetailUser): FavViewModel{
+        val factory = FavVMFactory.getInstance(mFavActivity.application)
+        return ViewModelProvider(mFavActivity, factory)[FavViewModel::class.java]
+    }
+
     companion object {
-        private lateinit var following: String
-        private lateinit var follower: String
         private const val TAG = "DetailUser"
         const val EXTRA_LOGIN = "extra_login"
-
-        @StringRes
-        private val TAB_TITLES = intArrayOf(
-        )
     }
 }

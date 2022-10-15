@@ -1,18 +1,16 @@
 package com.andyra.submission1ivanandyramadhan.View.Detail
 
-import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andyra.submission1ivanandyramadhan.Adapter.ListProfileAdapter
 import com.andyra.submission1ivanandyramadhan.Api.ApiConfig
-import com.andyra.submission1ivanandyramadhan.Data.FollowData
-import com.andyra.submission1ivanandyramadhan.Data.Items
+import com.andyra.submission1ivanandyramadhan.Data.Remote.FollowData
+import com.andyra.submission1ivanandyramadhan.Data.Remote.Items
 import com.andyra.submission1ivanandyramadhan.databinding.FragmentFollowBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,7 +19,7 @@ import retrofit2.Response
 class FollowFragment : Fragment() {
     private lateinit var mBinding: FragmentFollowBinding
 
-    private val mlistfoll = ArrayList<Items>()
+    private val mListFoll = ArrayList<Items>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,25 +32,25 @@ class FollowFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         showLoading(true)
 
-        getfollow()
+        getFollow()
 
         mBinding.rvlistfol.setHasFixedSize(true)
     }
 
-    private fun getfollow() {
-        mlistfoll.clear()
+    private fun getFollow() {
+        mListFoll.clear()
         showItems()
 
-        var mclient: Call<FollowData>
-        val user_follow = arguments?.getString(EXTRA_USERNAME).toString()
+        val mClient: Call<FollowData>
+        val userFollow = arguments?.getString(EXTRA_USERNAME).toString()
         val index = arguments?.getInt(ARG_SECTION_NUMBER, 0)
 
-        if (index == 1) {
-            mclient = ApiConfig.getApiService().getfollowing(user_follow)
+        mClient = if (index == 1) {
+            ApiConfig.getApiService().getFollowing(userFollow)
         } else {
-            mclient = ApiConfig.getApiService().getfollowers(user_follow)
+            ApiConfig.getApiService().getFollowers(userFollow)
         }
-        mclient.enqueue(object : Callback<FollowData> {
+        mClient.enqueue(object : Callback<FollowData> {
             override fun onResponse(call: Call<FollowData>, response: Response<FollowData>) {
                 if (response.isSuccessful) {
                     val mresponse = response.body()
@@ -68,24 +66,24 @@ class FollowFragment : Fragment() {
                         }
                     }
                 } else {
-                    Log.e(TAG, "${response.message()}")
+                    Log.e(TAG, response.message().toString())
                 }
 
             }
 
             override fun onFailure(call: Call<FollowData>, t: Throwable) {
-                Log.e(TAG, "${t.message}")
+                Log.e(TAG, t.message.toString())
             }
         })
     }
 
     private fun showFollow(mresponse: FollowData) {
         for (data in mresponse) {
-            val mpfoll = Items(
+            val mFoll = Items(
                 data.avatarUrl,
                 data.login
             )
-            mlistfoll.add(mpfoll)
+            mListFoll.add(mFoll)
         }
         showRecyclerList()
     }
@@ -93,13 +91,9 @@ class FollowFragment : Fragment() {
     private fun showRecyclerList() {
         showLoading(false)
         mBinding.apply {
-            if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                rvlistfol.layoutManager = GridLayoutManager(root.context, 2)
-            } else {
-                rvlistfol.layoutManager = LinearLayoutManager(root.context)
-            }
-            val mlistprofileadapter = ListProfileAdapter(mlistfoll)
-            rvlistfol.adapter = mlistprofileadapter
+            rvlistfol.layoutManager = LinearLayoutManager(root.context)
+            val mListProfileAdapter = ListProfileAdapter(mListFoll)
+            rvlistfol.adapter = mListProfileAdapter
         }
     }
 
@@ -111,8 +105,8 @@ class FollowFragment : Fragment() {
         }
     }
 
-    private fun showLoading(mload: Boolean) {
-        if (mload) {
+    private fun showLoading(mLoad: Boolean) {
+        if (mLoad) {
             mBinding.mpfol.visibility = View.VISIBLE
         } else {
             mBinding.mpfol.visibility = View.INVISIBLE
