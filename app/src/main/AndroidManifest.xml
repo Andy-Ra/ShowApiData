@@ -15,10 +15,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Submission1IvanAndyRamadhan"
         tools:targetApi="31">
-        <activity android:name=".View.MainActivity" />
+        <activity
+            android:name=".View.MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".View.SplashScreen"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
             <intent-filter>
@@ -28,11 +31,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".View.Detail.DetailUser"
-            android:exported="false" />
-    <activity
-        android:name=".View.FavActivity"
-        android:exported="false" />
+            android:name=".View.Detail.DetailUserActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".View.FavActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

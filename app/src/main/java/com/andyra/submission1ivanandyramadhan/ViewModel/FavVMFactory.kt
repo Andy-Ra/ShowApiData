@@ -10,20 +10,20 @@ class FavVMFactory private constructor(private val mApplication: Application) : 
         private var INSTANCE: FavVMFactory? = null
 
         @JvmStatic
-        fun getInstance(application: Application): FavVMFactory {
+        fun getInstance(mApplication: Application): FavVMFactory {
             if (INSTANCE == null) {
                 synchronized(FavVMFactory::class.java) {
-                    INSTANCE = FavVMFactory(application)
+                    INSTANCE = FavVMFactory(mApplication)
                 }
             }
             return INSTANCE as FavVMFactory
         }
     }
 
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(FavViewModel::class.java)) {
+    override fun <T : ViewModel> create(mModelClass: Class<T>): T {
+        if (mModelClass.isAssignableFrom(FavViewModel::class.java)) {
             return FavViewModel(mApplication) as T
         }
-        throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
+        throw IllegalArgumentException(StringBuilder("Unknown ViewModel class: ").append(mModelClass.name).toString())
     }
 }

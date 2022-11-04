@@ -8,7 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.andyra.submission1ivanandyramadhan.Data.Remote.Items
-import com.andyra.submission1ivanandyramadhan.View.Detail.DetailUser
+import com.andyra.submission1ivanandyramadhan.View.Detail.DetailUserActivity
 import com.andyra.submission1ivanandyramadhan.R
 import com.bumptech.glide.Glide
 
@@ -33,12 +33,12 @@ class ListProfileAdapter(private val mList: ArrayList<Items>) : RecyclerView.Ada
             tvUser.text = username
         }
 
-        mHolder.itemView.setOnClickListener(){
+        mHolder.itemView.setOnClickListener{
             val mContext = mHolder.itemView.context
             val sendLogin = mList[mposition].login
-            val move = Intent(mContext, DetailUser::class.java)
+            val move = Intent(mContext, DetailUserActivity::class.java)
 
-            move.putExtra(DetailUser.EXTRA_LOGIN, sendLogin)
+            move.putExtra(DetailUserActivity.EXTRA_LOGIN, sendLogin)
             mContext.startActivity(move)
 
         }

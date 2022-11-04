@@ -15,8 +15,8 @@
             android:id="@+id/imgitempp"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="5dp"
-            tools:contentDescription="@string/photodetail"
+            android:layout_marginStart="5dp"
+            android:contentDescription="@string/photodetail"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/user1" />
@@ -44,8 +44,8 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            tools:contentDescription="@string/pickuser"
+            android:layout_marginEnd="5dp"
+            android:contentDescription="@string/pickuser"
             android:src="@drawable/ic_sharp_arrow_forward_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

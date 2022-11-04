@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Submission3 Ivan Andy Ramadhan</string>
-    <string name="dark_mode">Dark Mode</string>
+    <string name="theme_key">ThemeKey</string>
 
     <!--Title-->
     <string name="detailuser">User Detail</string>
@@ -23,6 +23,7 @@
     <string name="githubuser">Github User</string>
     <string name="noresult">Github User Not Found</string>
     <string name="noone">Nothing One Else</string>
+    <string name="githubHeader">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</string>
 
     <!--Detail-->
     <string name="photodetail">This is photo profiles</string>

@@ -1,117 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.Detail.DetailUser">
+    android:orientation="vertical"
+    tools:context=".View.Detail.DetailUserActivity">
 
-    <RelativeLayout
-        android:id="@+id/lydprofile"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="25dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/imgdetail"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="25dp"
             android:contentDescription="@string/photodetail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/user1" />
 
         <TextView
             android:id="@+id/tvdname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/imgdetail"
             android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="25dp"
             android:gravity="center"
             android:textSize="20sp"
             android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgdetail"
             tools:text="@string/Name" />
 
         <TextView
             android:id="@+id/tvduname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvdname"
+            android:layout_marginHorizontal="25dp"
             android:layout_marginTop="5dp"
             android:gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvdname"
             tools:text="@string/username" />
 
-        <TextView
-            android:id="@+id/tvdlocation"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvduname"
+            android:id="@+id/lyDLocation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvduname"
             android:layout_marginTop="25dp"
-            android:drawableLeft="@drawable/ic_outline_location_on_16"
-            tools:text="@string/location" />
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tvdlocation"
+                android:layout_width="0dp"
+                android:layout_weight=".5"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_outline_location_on_16"
+                tools:text="@string/location" />
 
-        <TextView
-            android:id="@+id/tvdcompany"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvduname"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="25dp"
-            android:layout_toRightOf="@id/tvdlocation"
-            android:drawableLeft="@drawable/ic_baseline_domain_16"
-            tools:text="@string/company" />
+            <TextView
+                android:id="@+id/tvdcompany"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight=".5"
+                android:drawableStart="@drawable/ic_baseline_domain_16"
+                tools:text="@string/company" />
 
-        <ToggleButton
-            android:id="@+id/tbFavManager"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/tvduname"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="25dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/ic_baseline_favorite_border_24"
-            android:contentDescription="@string/FavManagerDetail"
-            android:focusable="false"
-            android:focusableInTouchMode="false" />
-
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvdrepo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvdcompany"
-            android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/ic_baseline_collections_bookmark_16"
+            android:layout_marginStart="25dp"
+            android:drawableStart="@drawable/ic_baseline_collections_bookmark_16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lyDLocation"
             tools:text="@string/repo" />
-    </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/lydmenu"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/lydprofile"
-        android:orientation="vertical">
+        <ToggleButton
+            android:id="@+id/tbFavManager"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="25dp"
+            tools:background="@drawable/ic_baseline_favorite_border_24"
+            android:contentDescription="@string/FavManagerDetail"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textOff=""
+            android:textOn=""
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lyDLocation" />
+
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabsfollow"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tbFavManager" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/vpfollow"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/vdline"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_below="@id/lydmenu"
-        android:background="@android:color/darker_gray" />
-
-    <ProgressBar
-        android:id="@+id/pgdetail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="25dp" />
-</RelativeLayout>
+        <ProgressBar
+            android:id="@+id/pgdetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

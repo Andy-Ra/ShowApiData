@@ -1,7 +1,6 @@
 package com.andyra.submission1ivanandyramadhan.Repository
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import com.andyra.submission1ivanandyramadhan.Data.Local.FavDao
 import com.andyra.submission1ivanandyramadhan.Data.Local.FavData

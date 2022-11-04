@@ -2,7 +2,9 @@ package com.andyra.submission1ivanandyramadhan.View
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andyra.submission1ivanandyramadhan.Adapter.ListProfileAdapter
@@ -30,7 +32,7 @@ class FavActivity : AppCompatActivity() {
 
     private fun getDataFav() {
         showMaterial()
-        
+
         val mFavViewModel = obtainViewModel(this@FavActivity)
         mFavViewModel.getAllFav().observe(this) { mData ->
             if (mData != null) {
@@ -40,7 +42,7 @@ class FavActivity : AppCompatActivity() {
         }
     }
 
-    private fun obtainViewModel(mFavActivity: FavActivity): FavViewModel{
+    private fun obtainViewModel(mFavActivity: FavActivity): FavViewModel {
         val factory = FavVMFactory.getInstance(mFavActivity.application)
         return ViewModelProvider(mFavActivity, factory)[FavViewModel::class.java]
     }
@@ -74,15 +76,12 @@ class FavActivity : AppCompatActivity() {
         }
     }
 
-    private fun showLoading(mload: Boolean){
-        if (mload) {
-            mBinding.mpfav.visibility = View.VISIBLE
-        } else {
-            mBinding.mpfav.visibility = View.GONE
-        }
+    private fun showLoading(mLoad: Boolean) {
+        mBinding.mpfav.isVisible = mLoad
     }
 
-    companion object {
-        private const val TAG = "FavActivity"
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) this.finish()
+        return super.onOptionsItemSelected(item)
     }
 }

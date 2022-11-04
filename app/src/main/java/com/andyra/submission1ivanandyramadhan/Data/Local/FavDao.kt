@@ -15,6 +15,6 @@ interface FavDao {
     fun insUserFav(mFavData: FavData)
 
     @Query("DELETE FROM FavData WHERE login = :login")
-    abstract fun dltUserFav(login: String)
+    fun dltUserFav(login: String)
 
 }

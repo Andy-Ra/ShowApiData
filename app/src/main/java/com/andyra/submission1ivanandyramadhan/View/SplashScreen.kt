@@ -20,7 +20,11 @@ class SplashScreen : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
-        }, 1500)
+        }, delayTime)
         mBinding.tvSVersion.text = StringBuilder(getString(R.string.tVersion)).append(BuildConfig.VERSION_NAME)
+    }
+
+    companion object {
+        private val delayTime:Long = 1500
     }
 }
